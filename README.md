@@ -46,9 +46,9 @@ A real-time fleet and order management dashboard for delivery operations. Built 
 
 ### Prerequisites
 - Node.js 18+
-- PostgreSQL 16 (or Docker)
+- Docker & Docker Compose
 
-### Option 1: Docker (Recommended)
+### Docker (Recommended)
 
 ```bash
 # Clone the repository
@@ -56,12 +56,15 @@ git clone <your-repo-url>
 cd swiftserve
 
 # Start all services
-docker-compose up
-
-# The app will be available at:
-# - Frontend: http://localhost:5173
-# - API: http://localhost:4000
+docker-compose up --build
 ```
+
+**Services:**
+| Service | URL |
+|---------|-----|
+| Frontend | http://localhost:5173 |
+| API | http://localhost:4000 |
+| pgAdmin | http://localhost:5050 |
 
 ### Option 2: Local Development
 
@@ -87,7 +90,14 @@ npm run dev
 
 Create a PostgreSQL database named `swiftserve_db` with user `user` and password `password`, or update the `.env` file with your credentials.
 
-The schema and seed data auto-initialize on first Docker startup.
+**Run migrations:**
+
+```bash
+cd backend
+npm run migrate:up
+```
+
+This will create all tables and seed data.
 
 ## Default Credentials
 
@@ -109,8 +119,9 @@ swiftserve/
 │   │   ├── orderController.js
 │   │   ├── productController.js
 │   │   └── userController.js
-│   ├── db/
-│   │   └── init.sql      # Schema + seed data
+│   ├── migrations/        # Database migrations
+│   │   ├── 001_initial_schema.js
+│   │   └── 002_seed_data.js
 │   ├── middleware/
 │   │   └── auth.js       # JWT verification
 │   ├── routes/           # API routes
@@ -181,6 +192,7 @@ DB_PASSWORD=password
 PORT=4000
 JWT_SECRET=your-secret-key
 CLIENT_URL=http://localhost:5173
+DATABASE_URL=postgres://user:password@localhost:5432/swiftserve_db
 ```
 
 ### Frontend (.env)
@@ -200,7 +212,29 @@ Socket.io events for live updates:
 | `join:kitchen` | Client → Server | Subscribe to kitchen updates |
 | `join:driver:{id}` | Client → Server | Subscribe to driver orders |
 
-## Scripts
+## Database Migrations
+
+Uses [node-pg-migrate](https://salsita.github.io/node-pg-migrate/) for schema migrations.
+
+**Docker (uses containerized environment):**
+```bash
+cd backend
+
+# Run pending migrations
+npm run migrate:up
+
+# Rollback last migration
+npm run migrate:down
+
+# Create a new migration (local)
+npm run migrate:create -- --name add_new_field
+```
+
+**Local PostgreSQL (requires local DB setup):**
+```bash
+npm run migrate:up:local
+npm run migrate:down:local
+```
 
 ### Backend
 ```bash
@@ -222,6 +256,18 @@ docker-compose up --build      # Rebuild & start
 docker-compose down            # Stop
 docker-compose logs -f api     # View API logs
 ```
+
+### Database GUI (pgAdmin)
+pgAdmin is available at http://localhost:5050
+
+Login: `admin@swiftserve.com` / `admin123`
+
+To connect to the database:
+- Host: `db`
+- Port: `5432`
+- Database: `swiftserve_db`
+- Username: `user`
+- Password: `password`
 
 ## License
 

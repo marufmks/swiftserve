@@ -10,7 +10,19 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
-      - ./backend/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@swiftserve.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - db
 
   api:
     build:
@@ -22,9 +34,15 @@ services:
       - ./backend:/app
       - /app/node_modules
     environment:
-      DATABASE_URL: postgres://user:password@db:5432/swiftserve_db
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: swiftserve_db
+      DB_USER: user
+      DB_PASSWORD: password
+      PORT: 4000
+      CLIENT_URL: http://localhost:5173
     depends_on:
-      - db   # ✅ simplified (your previous condition caused issues)
+      - db
 
   client:
     build:
@@ -40,3 +58,4 @@ services:
 
 volumes:
   pgdata:
+  pgadmin_data:

@@ -66,13 +66,13 @@ CREATE INDEX idx_order_items_product_id ON order_items(product_id);
 CREATE INDEX idx_products_category ON products(category);
 CREATE INDEX idx_products_available ON products(available);
 
--- Seed data: Users
+-- Seed data: Users (password: 'password')
 INSERT INTO users (name, email, password_hash, role, phone) VALUES
-  ('Admin User', 'admin@swiftserve.local', '$2b$10$xJwZ8k9j2hL5mN0pQ3rT1uYvW9zA7cE4fG6hI8jK0lM1nO2pQ3rT4u', 'admin', '555-0100'),
-  ('John Driver', 'driver1@swiftserve.local', '$2b$10$xJwZ8k9j2hL5mN0pQ3rT1uYvW9zA7cE4fG6hI8jK0lM1nO2pQ3rT4u', 'driver', '555-0101'),
-  ('Jane Driver', 'driver2@swiftserve.local', '$2b$10$xJwZ8k9j2hL5mN0pQ3rT1uYvW9zA7cE4fG6hI8jK0lM1nO2pQ3rT4u', 'driver', '555-0102'),
-  ('Alice Customer', 'alice@example.com', '$2b$10$xJwZ8k9j2hL5mN0pQ3rT1uYvW9zA7cE4fG6hI8jK0lM1nO2pQ3rT4u', 'customer', '555-0103'),
-  ('Bob Customer', 'bob@example.com', '$2b$10$xJwZ8k9j2hL5mN0pQ3rT1uYvW9zA7cE4fG6hI8jK0lM1nO2pQ3rT4u', 'customer', '555-0104');
+  ('Admin User', 'admin@swiftserve.local', '$2b$10$929ttaGeuTH2VQewrrtOqukh4quYZuSylffUqJ88/FB9TiKFEX5m.', 'admin', '555-0100'),
+  ('John Driver', 'driver1@swiftserve.local', '$2b$10$929ttaGeuTH2VQewrrtOqukh4quYZuSylffUqJ88/FB9TiKFEX5m.', 'driver', '555-0101'),
+  ('Jane Driver', 'driver2@swiftserve.local', '$2b$10$929ttaGeuTH2VQewrrtOqukh4quYZuSylffUqJ88/FB9TiKFEX5m.', 'driver', '555-0102'),
+  ('Alice Customer', 'alice@example.com', '$2b$10$929ttaGeuTH2VQewrrtOqukh4quYZuSylffUqJ88/FB9TiKFEX5m.', 'customer', '555-0103'),
+  ('Bob Customer', 'bob@example.com', '$2b$10$929ttaGeuTH2VQewrrtOqukh4quYZuSylffUqJ88/FB9TiKFEX5m.', 'customer', '555-0104');
 
 -- Seed data: Products (sample restaurant menu)
 INSERT INTO products (name, description, price, category, image_url, available) VALUES
