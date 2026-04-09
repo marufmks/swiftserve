@@ -64,7 +64,7 @@ docker-compose up --build
 |---------|-----|
 | Frontend | http://localhost:5173 |
 | API | http://localhost:4000 |
-| pgAdmin | http://localhost:5050 |
+| Adminer | http://localhost:8080 |
 
 ### Option 2: Local Development
 
@@ -257,17 +257,15 @@ docker-compose down            # Stop
 docker-compose logs -f api     # View API logs
 ```
 
-### Database GUI (pgAdmin)
-pgAdmin is available at http://localhost:5050
-
-Login: `admin@swiftserve.com` / `admin123`
+### Database GUI (Adminer)
+Adminer is available at http://localhost:8080
 
 To connect to the database:
-- Host: `db`
-- Port: `5432`
-- Database: `swiftserve_db`
+- System: PostgreSQL
+- Server: `db`
 - Username: `user`
 - Password: `password`
+- Database: `swiftserve_db`
 
 ## License
 
