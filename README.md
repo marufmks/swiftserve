@@ -2,7 +2,7 @@
 
 A real-time fleet and order management dashboard for delivery operations. Built with the PERN stack (PostgreSQL, Express, React, Node.js).
 
-![SwiftServe Dashboard](https://via.placeholder.com/800x400?text=SwiftServe+Dashboard)
+![SwiftServe Dashboard](Resource/dashboard_image.png)
 
 ## Features
 

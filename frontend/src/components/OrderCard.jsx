@@ -41,7 +41,7 @@ const OrderCard = ({ order, onStatusChange, onAssignDriver, showActions = false 
             <span>
               {item.quantity}x {item.product_name}
             </span>
-            <span>${(item.quantity * item.unit_price).toFixed(2)}</span>
+            <span>${(item.quantity * Number(item.unit_price)).toFixed(2)}</span>
           </div>
         ))}
       </div>
@@ -65,7 +65,7 @@ const OrderCard = ({ order, onStatusChange, onAssignDriver, showActions = false 
           </div>
         )}
         {order.notes && <p className="text-xs italic">Note: {order.notes}</p>}
-        <div className="font-bold text-lg pt-2">Total: ${order.total?.toFixed(2)}</div>
+        <div className="font-bold text-lg pt-2">Total: ${Number(order.total)?.toFixed(2)}</div>
       </div>
 
       {showActions && (

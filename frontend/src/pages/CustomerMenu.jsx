@@ -17,17 +17,17 @@ const CustomerMenu = () => {
 
   const { data: products = [] } = useQuery({
     queryKey: ['products'],
-    queryFn: () => api.get('/products').then((res) => res.data),
+    queryFn: () => api.get('/api/products').then((res) => res.data),
   });
 
   const { data: categories = [] } = useQuery({
     queryKey: ['categories'],
-    queryFn: () => api.get('/products/categories').then((res) => res.data),
+    queryFn: () => api.get('/api/products/categories').then((res) => res.data),
   });
 
   const { data: orders = [] } = useQuery({
     queryKey: ['orders', user?.id],
-    queryFn: () => api.get(`/orders?user_id=${user?.id}`).then((res) => res.data),
+    queryFn: () => api.get(`/api/orders?user_id=${user?.id}`).then((res) => res.data),
   });
 
   useEffect(() => {
@@ -41,7 +41,7 @@ const CustomerMenu = () => {
   }, [queryClient]);
 
   const createOrderMutation = useMutation({
-    mutationFn: (orderData) => api.post('/orders', orderData),
+    mutationFn: (orderData) => api.post('/api/orders', orderData),
     onSuccess: () => {
       queryClient.invalidateQueries(['orders']);
       setCart({});
@@ -91,7 +91,7 @@ const CustomerMenu = () => {
   };
 
   const cartTotal = Object.values(cart).reduce(
-    (sum, item) => sum + item.price * item.quantity,
+    (sum, item) => sum + Number(item.price) * item.quantity,
     0
   );
   const cartCount = Object.values(cart).reduce((sum, item) => sum + item.quantity, 0);
@@ -173,7 +173,7 @@ const CustomerMenu = () => {
                     <div key={item.id} className="flex items-center justify-between border-b pb-4">
                       <div>
                         <p className="font-semibold">{item.name}</p>
-                        <p className="text-sm text-gray-500">${item.price.toFixed(2)}</p>
+                        <p className="text-sm text-gray-500">${Number(item.price).toFixed(2)}</p>
                       </div>
                       <div className="flex items-center space-x-3">
                         <button

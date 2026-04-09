@@ -13,7 +13,7 @@ const ProductCard = ({ product, onAdd, quantity = 0, onUpdateQuantity }) => {
       <div className="p-4">
         <div className="flex justify-between items-start mb-2">
           <h3 className="font-semibold text-lg">{product.name}</h3>
-          <span className="text-orange-600 font-bold">${product.price.toFixed(2)}</span>
+          <span className="text-orange-600 font-bold">${Number(product.price).toFixed(2)}</span>
         </div>
         {product.description && (
           <p className="text-gray-600 text-sm mb-3 line-clamp-2">{product.description}</p>

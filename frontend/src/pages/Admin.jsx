@@ -38,37 +38,37 @@ const Admin = () => {
 
   const { data: orders = [] } = useQuery({
     queryKey: ['orders'],
-    queryFn: () => api.get('/orders').then((res) => res.data),
+    queryFn: () => api.get('/api/orders').then((res) => res.data),
   });
 
   const { data: products = [] } = useQuery({
     queryKey: ['products'],
-    queryFn: () => api.get('/products').then((res) => res.data),
+    queryFn: () => api.get('/api/products').then((res) => res.data),
   });
 
   const { data: drivers = [] } = useQuery({
     queryKey: ['drivers'],
-    queryFn: () => api.get('/orders/drivers').then((res) => res.data),
+    queryFn: () => api.get('/api/orders/drivers').then((res) => res.data),
   });
 
   const { data: categories = [] } = useQuery({
     queryKey: ['categories'],
-    queryFn: () => api.get('/products/categories').then((res) => res.data),
+    queryFn: () => api.get('/api/products/categories').then((res) => res.data),
   });
 
   const updateStatusMutation = useMutation({
-    mutationFn: ({ id, status }) => api.patch(`/orders/${id}/status`, { status }),
+    mutationFn: ({ id, status }) => api.patch(`/api/orders/${id}/status`, { status }),
     onSuccess: () => queryClient.invalidateQueries(['orders']),
   });
 
   const assignDriverMutation = useMutation({
-    mutationFn: ({ orderId, driverId }) => api.patch(`/orders/${orderId}/assign-driver`, { driver_id: driverId }),
+    mutationFn: ({ orderId, driverId }) => api.patch(`/api/orders/${orderId}/assign-driver`, { driver_id: driverId }),
     onSuccess: () => queryClient.invalidateQueries(['orders']),
     onError: (err) => toast.error(err.response?.data?.error || 'Failed to assign driver'),
   });
 
   const createProductMutation = useMutation({
-    mutationFn: (data) => api.post('/products', data),
+    mutationFn: (data) => api.post('/api/products', data),
     onSuccess: () => {
       queryClient.invalidateQueries(['products']);
       queryClient.invalidateQueries(['categories']);
@@ -80,7 +80,7 @@ const Admin = () => {
   });
 
   const updateProductMutation = useMutation({
-    mutationFn: ({ id, data }) => api.put(`/products/${id}`, data),
+    mutationFn: ({ id, data }) => api.put(`/api/products/${id}`, data),
     onSuccess: () => {
       queryClient.invalidateQueries(['products']);
       setShowProductModal(false);
@@ -91,7 +91,7 @@ const Admin = () => {
   });
 
   const deleteProductMutation = useMutation({
-    mutationFn: (id) => api.delete(`/products/${id}`),
+    mutationFn: (id) => api.delete(`/api/products/${id}`),
     onSuccess: () => {
       queryClient.invalidateQueries(['products']);
       toast.success('Product deleted!');

@@ -12,7 +12,7 @@ const Driver = () => {
 
   const { data: orders = [] } = useQuery({
     queryKey: ['orders'],
-    queryFn: () => api.get('/orders').then((res) => res.data),
+    queryFn: () => api.get('/api/orders').then((res) => res.data),
     refetchInterval: 5000,
   });
 
@@ -33,7 +33,7 @@ const Driver = () => {
   }, [user, queryClient]);
 
   const updateStatusMutation = useMutation({
-    mutationFn: ({ id, status }) => api.patch(`/orders/${id}/status`, { status }),
+    mutationFn: ({ id, status }) => api.patch(`/api/orders/${id}/status`, { status }),
     onSuccess: () => {
       queryClient.invalidateQueries(['orders']);
       toast.success('Status updated!');
@@ -85,7 +85,7 @@ const Driver = () => {
                 <div key={order.id} className="border-2 border-dashed border-blue-300 rounded-lg p-4 bg-blue-50">
                   <p className="font-bold">Order #{order.id}</p>
                   <p className="text-sm text-gray-600">{order.items?.length || 0} items</p>
-                  <p className="font-semibold">Total: ${order.total?.toFixed(2)}</p>
+                  <p className="font-semibold">Total: ${Number(order.total)?.toFixed(2)}</p>
                 </div>
               ))}
             </div>
